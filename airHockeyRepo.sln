@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{B1AEEE49-8D5F-74E1-8B50-1A00B2051E82}") = "airHockeyRepo", "Assembly-CSharp.csproj", "{D1F373E2-CE7C-8AC1-BB0D-76EF2B43815B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1F373E2-CE7C-8AC1-BB0D-76EF2B43815B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1F373E2-CE7C-8AC1-BB0D-76EF2B43815B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1F373E2-CE7C-8AC1-BB0D-76EF2B43815B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1F373E2-CE7C-8AC1-BB0D-76EF2B43815B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

@@ -257,6 +257,56 @@ ModelImporter:
     4300094: ID297
     4300096: ID303
     4300098: ID309
+    6400000: group_0
+    6400002: ID105
+    6400004: ID111
+    6400006: ID117
+    6400008: ID123
+    6400010: ID129
+    6400012: ID13
+    6400014: ID135
+    6400016: ID141
+    6400018: ID147
+    6400020: ID153
+    6400022: ID159
+    6400024: ID165
+    6400026: ID171
+    6400028: ID177
+    6400030: ID183
+    6400032: ID189
+    6400034: ID195
+    6400036: ID201
+    6400038: ID207
+    6400040: ID21
+    6400042: ID213
+    6400044: ID219
+    6400046: ID225
+    6400048: ID231
+    6400050: ID237
+    6400052: ID243
+    6400054: ID249
+    6400056: ID255
+    6400058: ID261
+    6400060: ID267
+    6400062: ID27
+    6400064: ID273
+    6400066: ID279
+    6400068: ID285
+    6400070: ID291
+    6400072: ID297
+    6400074: ID303
+    6400076: ID309
+    6400078: ID33
+    6400080: ID41
+    6400082: ID47
+    6400084: ID53
+    6400086: ID59
+    6400088: ID67
+    6400090: ID73
+    6400092: ID79
+    6400094: ID87
+    6400096: ID93
+    6400098: ID99
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -284,13 +334,13 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
-    swapUVChannels: 0
-    generateSecondaryUV: 0
+    swapUVChannels: 1
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
-    keepQuads: 0
+    keepQuads: 1
     weldVertices: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
