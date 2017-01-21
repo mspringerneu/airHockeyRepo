@@ -8,10 +8,12 @@ public class puck_script : MonoBehaviour {
 	private Vector3 currentVel;
 	private GameObject puck;
 	private Rigidbody puckRb;
+	private GameObject gameController;
 	// puck diameter 3.25"
 
 	// Use this for initialization
 	void Start () {
+		gameController = GameObject.FindGameObjectWithTag ("GameController");
 		puck = GameObject.FindGameObjectWithTag("puck");
 		puckRb = puck.GetComponent<Rigidbody> ();
 	}
@@ -71,10 +73,12 @@ public class puck_script : MonoBehaviour {
 		}
 		else {
 			if (transform.position.z >= 100f) {
+				gameController.GetComponent<game_controller> ().playerScores ();
 				print ("player 1 scores!");
 				Destroy (puck);
 			}
 			else if (transform.position.z <= 0f) {
+				gameController.GetComponent<game_controller> ().opponentScores ();
 				print ("player 2 scores!");
 				Destroy (puck);
 			}

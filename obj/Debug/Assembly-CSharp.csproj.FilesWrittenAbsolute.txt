@@ -15,3 +15,7 @@
 /Volumes/MSPRINGER/UnityGameDev/projects/airHockeyRepo/Temp/bin/Debug/Unity.CecilTools.dll
 /Volumes/MSPRINGER/UnityGameDev/projects/airHockeyRepo/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Volumes/MSPRINGER/UnityGameDev/projects/airHockeyRepo/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Volumes/MSPRINGER/UnityGameDev/projects/airHockeyRepo/Temp/bin/Debug/UnityEngine.PlaymodeTestsRunner.dll
+/Volumes/MSPRINGER/UnityGameDev/projects/airHockeyRepo/Temp/bin/Debug/UnityEngine.Analytics.dll
+/Volumes/MSPRINGER/UnityGameDev/projects/airHockeyRepo/Temp/bin/Debug/UnityEngine.HoloLens.dll
+/Volumes/MSPRINGER/UnityGameDev/projects/airHockeyRepo/Temp/bin/Debug/UnityEngine.VR.dll
