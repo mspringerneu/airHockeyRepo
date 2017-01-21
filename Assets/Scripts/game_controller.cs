@@ -3,20 +3,35 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class game_controller : MonoBehaviour {
-	private bool isPlayerServe;
+	private bool is_p1_serve;
+	private bool is_p2_serve;
+	private bool p1_puck_active;
+	private bool p2_puck_active;
 	private static int playerScore;
 	private static int opponentScore;
 	private int maxScore;
 	private GameObject player1Canvas;
 	private GameObject player2Canvas;
+	private gc_messages_controller gcMessageController;
+	private mallet_controller p1_malletController;
+	private opponent_mallet p2_malletController;
+	private puck_controller puckController;
+	private puck_controller p1_puckController;
+	//private puck_controller p2_puckController;
+
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 		player1Canvas = GameObject.FindGameObjectWithTag ("p1canvas");
 		player2Canvas = GameObject.FindGameObjectWithTag ("p2canvas");
-		isPlayerServe = true;
-		playerScore = 0;
-		opponentScore = 0;
+		gcMessageController = GameObject.FindGameObjectWithTag("canvas_controller").GetComponent<gc_messages_controller>();
+		p1_malletController = GameObject.FindGameObjectWithTag("player_mallet").GetComponent<mallet_controller>();
+		p2_malletController = GameObject.FindGameObjectWithTag("opponent_mallet").GetComponent<opponent_mallet>();
+		puckController = GameObject.FindGameObjectWithTag("p1_puck").GetComponentInChildren<puck_controller>();
+		p1_puckController = GameObject.FindGameObjectWithTag("p1_puck").GetComponentInChildren<puck_controller>();
+		//p2_puckController = GameObject.FindGameObjectWithTag("p2_puck").GetComponentInChildren<puck_controller>();
 		maxScore = 5;
+		reset ();
+		startGame ();
 	}
 	
 	// Update is called once per frame
@@ -44,7 +59,7 @@ public class game_controller : MonoBehaviour {
 
 	// if true, player gets puck, otherwise opponent gets puck
 	public bool whoseServe() {
-		return isPlayerServe;
+		return is_p1_serve;
 	}
 
 	public int[] scoreCount() {
@@ -55,26 +70,48 @@ public class game_controller : MonoBehaviour {
 	}
 
 	public void startGame() {
-		
+		pauseMalletMovement ();
+		gcMessageController.startGameMessages ();
+		puckController.spawnPuck ("p1");
+		enableMalletMovement ();
 	}
 
 	public void reset() {
-		isPlayerServe = true;
+		is_p1_serve = true;
+		is_p2_serve = false;
+		p1_puck_active = true;
+		p2_puck_active = false;
 		playerScore = 0;
 		opponentScore = 0;
 	}
 
 	public void playerScores() {
+		print ("goal scored by: p1");
+		pauseMalletMovement ();
+		resetMalletPositions ();
 		playerScore += 1;
+		gcMessageController.p1ScoresMessages ();
 		if (playerScore == maxScore) {
-			endGame ("player");
+			gcMessageController.endGameMessages("player1");
+		}
+		else {
+			puckController.spawnPuck ("p2");
+			enableMalletMovement ();
 		}
 	}
 
 	public void opponentScores() {
+		print ("goal scored by: p2");
+		pauseMalletMovement ();
+		resetMalletPositions ();
 		opponentScore += 1;
+		gcMessageController.p2ScoresMessages ();
 		if (opponentScore == maxScore) {
 			endGame ("opponent");
+		}
+		else {
+			puckController.spawnPuck ("p1");
+			enableMalletMovement ();
 		}
 	}
 
@@ -85,5 +122,21 @@ public class game_controller : MonoBehaviour {
 		else if (winner == "opponent") {
 			
 		}
+	}
+
+	public void pauseMalletMovement() {
+		print("freezing mallet movements");
+		p1_malletController.pause ();
+		p2_malletController.pause ();
+	}
+
+	void resetMalletPositions () {
+		p1_malletController.resetPos ();
+		p2_malletController.resetPos ();
+	}
+
+	public void enableMalletMovement() {
+		p1_malletController.unpause ();
+		p2_malletController.unpause ();
 	}
 }

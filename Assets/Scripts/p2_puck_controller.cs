@@ -1,10 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class puck_script : MonoBehaviour {
-	private Vector3 centerPos = new Vector3(1.625f, 0.5f, 46.5f);
-	private Vector3 playerInitPos = new Vector3(1.625f, 0.5f, 11f);
-	private Vector3 opponentInitPos = new Vector3(1.625f, 0.5f, 82f);
+public class p2_puck_controller : MonoBehaviour
+{
+	private Vector3 centerPos = new Vector3 (1.625f, 0.5f, 46.5f);
+	private Vector3 playerInitPos = new Vector3 (1.625f, 0.5f, 11f);
+	private Vector3 opponentInitPos = new Vector3 (1.625f, 0.5f, 82f);
 	private Vector3 currentVel;
 	private GameObject puck;
 	private Rigidbody puckRb;
@@ -12,15 +14,17 @@ public class puck_script : MonoBehaviour {
 	// puck diameter 3.25"
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		gameController = GameObject.FindGameObjectWithTag ("GameController");
-		puck = GameObject.FindGameObjectWithTag("puck");
+		puck = GameObject.FindGameObjectWithTag ("p2_puck");
 		puckRb = puck.GetComponent<Rigidbody> ();
 	}
-	
+
 	// Update is called once per frame
 
-	void Update () {
+	void Update ()
+	{
 		currentVel = puckRb.velocity;
 		float newPosx = transform.position.x;
 		float newPosz = transform.position.z;
@@ -37,8 +41,7 @@ public class puck_script : MonoBehaviour {
 				newPosz = 97.5f;
 				constrain = true;
 				newVelz = -(Mathf.Abs (newVelz));
-			}
-			else if (transform.position.z <= 2.5f) {
+			} else if (transform.position.z <= 2.5f) {
 				newPosz = 2.5f;
 				constrain = true;
 				newVelz = Mathf.Abs (newVelz);
@@ -48,8 +51,7 @@ public class puck_script : MonoBehaviour {
 				puckRb.velocity = new Vector3 (newVelx, 0f, newVelz);
 			}
 
-		}
-		else if (transform.position.x < -6.5f) {
+		} else if (transform.position.x < -6.5f) {
 			if (transform.position.x <= -22.5f) {
 				newPosx = -22.5f;
 				constrain = true;
@@ -59,8 +61,7 @@ public class puck_script : MonoBehaviour {
 				newPosz = 97.5f;
 				constrain = true;
 				newVelz = -(Mathf.Abs (newVelz));
-			}
-			else if (transform.position.z <= 2.5f) {
+			} else if (transform.position.z <= 2.5f) {
 				newPosz = 2.5f;
 				constrain = true;
 				newVelz = Mathf.Abs (newVelz);
@@ -70,20 +71,31 @@ public class puck_script : MonoBehaviour {
 				puckRb.velocity = new Vector3 (newVelx, 0f, newVelz);
 			}
 
-		}
-		else {
+		} else {
 			if (transform.position.z >= 100f) {
 				gameController.GetComponent<game_controller> ().playerScores ();
 				print ("player 1 scores!");
-				Destroy (puck);
-			}
-			else if (transform.position.z <= 0f) {
+				puck.SetActive (false);
+			} else if (transform.position.z <= 0f) {
 				gameController.GetComponent<game_controller> ().opponentScores ();
 				print ("player 2 scores!");
-				Destroy (puck);
+				puck.SetActive (false);
 			}
-			
+
 		}
+	}
+
+	void resetPuck() {
+		puckRb.velocity.Set (0f, 0f, 0f);
+		transform.position = new Vector3 (0f, 0.1f, 80f);
+	}
+
+	public void spawnPuck() {
+		puck.SetActive (true);
+	}
+
+	public void destroyPuck() {
+		puck.SetActive (false);
 	}
 	/*
 	void OnCollisionEnter(Collision c) {

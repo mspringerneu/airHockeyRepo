@@ -15,6 +15,7 @@ public class mallet_controller : MonoBehaviour {
 	public float inputSpeed = 2.0f;
 	public float playerSpeed;
 	public float puckSpeed;
+	private bool isPaused;
 
 	// mallet diameter 4 1/2"
 
@@ -40,8 +41,9 @@ public class mallet_controller : MonoBehaviour {
 
 		// ai = GameObject.Find ("AI").GetComponent<AI> ();
 		coll = GameObject.Find("Rink/Boards").GetComponentInChildren<Rigidbody> ();
-		puckRb = GameObject.FindGameObjectWithTag ("puck").GetComponent<Rigidbody> ();
-		puck = GameObject.FindGameObjectWithTag ("puck");
+		//puckRb = GameObject.FindGameObjectWithTag ("puck").GetComponent<Rigidbody> ();
+		//puck = GameObject.FindGameObjectWithTag ("puck");
+		isPaused = true;
 	}
 	
 	// Update is called once per frame
@@ -69,52 +71,53 @@ public class mallet_controller : MonoBehaviour {
 	}
 
 	void Update() {
-		Vector3 malletVel = malletRb.velocity;
-		//Input to move the player
-		if (Input.GetKey ("left")) {
-			if (malletVel.x > 0 || transform.position.x <= -21.75f) {
-				malletRb.velocity = new Vector3 (0, malletVel.y, malletVel.z);
-			}
-			malletRb.velocity += new Vector3 (-playerSpeed * Time.deltaTime, 0f, 0f);
-			
-			//transform.Translate (-playerSpeed * Time.deltaTime, 0f, 0f);
-		}
-			
-		if (Input.GetKey ("right")) {
-			if (malletVel.x < 0 || transform.position.x >= 21.75f) {
-				malletRb.velocity = new Vector3 (0, malletVel.y, malletVel.z);
-			}
-			malletRb.velocity += new Vector3 (playerSpeed * Time.deltaTime, 0f, 0f);
-			
-			//transform.Translate (playerSpeed * Time.deltaTime, 0f, 0f);
-		}
-		if (Input.GetKey ("up")) {
-			if (malletVel.z < 0 || transform.position.z >= 40.0f) {
-				malletRb.velocity = new Vector3 (malletVel.x, malletVel.y, 0f);
-			}
-			malletRb.velocity += new Vector3 (0f, 0f, playerSpeed * Time.deltaTime);
+		if (!isPaused) {
+			Vector3 malletVel = malletRb.velocity;
+			//Input to move the player
+			if (Input.GetKey ("left")) {
+				if (malletVel.x > 0 || transform.position.x <= -21.75f) {
+					malletRb.velocity = new Vector3 (0, malletVel.y, malletVel.z);
+				}
+				malletRb.velocity += new Vector3 (-playerSpeed * Time.deltaTime, 0f, 0f);
 
-			//transform.Translate (0f, 0f, playerSpeed * Time.deltaTime);
-		}
-		if (Input.GetKey ("down")){
-			if (malletVel.z > 0 || transform.position.z <= 3f) {
-				malletRb.velocity = new Vector3 (malletVel.x, malletVel.y, 0f);
+				//transform.Translate (-playerSpeed * Time.deltaTime, 0f, 0f);
 			}
-			malletRb.velocity += new Vector3 (0f, 0f, -playerSpeed * Time.deltaTime);
-			//transform.Translate (0f, 0f, -playerSpeed * Time.deltaTime);
+
+			if (Input.GetKey ("right")) {
+				if (malletVel.x < 0 || transform.position.x >= 21.75f) {
+					malletRb.velocity = new Vector3 (0, malletVel.y, malletVel.z);
+				}
+				malletRb.velocity += new Vector3 (playerSpeed * Time.deltaTime, 0f, 0f);
+
+				//transform.Translate (playerSpeed * Time.deltaTime, 0f, 0f);
+			}
+			if (Input.GetKey ("up")) {
+				if (malletVel.z < 0 || transform.position.z >= 40.0f) {
+					malletRb.velocity = new Vector3 (malletVel.x, malletVel.y, 0f);
+				}
+				malletRb.velocity += new Vector3 (0f, 0f, playerSpeed * Time.deltaTime);
+
+				//transform.Translate (0f, 0f, playerSpeed * Time.deltaTime);
+			}
+			if (Input.GetKey ("down")){
+				if (malletVel.z > 0 || transform.position.z <= 3f) {
+					malletRb.velocity = new Vector3 (malletVel.x, malletVel.y, 0f);
+				}
+				malletRb.velocity += new Vector3 (0f, 0f, -playerSpeed * Time.deltaTime);
+				//transform.Translate (0f, 0f, -playerSpeed * Time.deltaTime);
+			}
+
+			//Collision detection with edges, basically we are restricting player movement
+
+			if (transform.position.x <= -21.75f)
+				transform.position = new Vector3 (-21.75f, transform.position.y, transform.position.z);
+			if (transform.position.x >= 21.75f)
+				transform.position = new Vector3 (21.75f, transform.position.y, transform.position.z);
+			if (transform.position.z >= 40.0f)
+				transform.position = new Vector3 ( transform.position.x, transform.position.y, 40.0f);
+			if (transform.position.z <= 3.5f)
+				transform.position = new Vector3 ( transform.position.x, transform.position.y, 3.5f);
 		}
-
-		//Collision detection with edges, basically we are restricting player movement
-
-		if (transform.position.x <= -21.75f)
-			transform.position = new Vector3 (-21.75f, transform.position.y, transform.position.z);
-		if (transform.position.x >= 21.75f)
-			transform.position = new Vector3 (21.75f, transform.position.y, transform.position.z);
-		if (transform.position.z >= 40.0f)
-			transform.position = new Vector3 ( transform.position.x, transform.position.y, 40.0f);
-		if (transform.position.z <= 3.5f)
-			transform.position = new Vector3 ( transform.position.x, transform.position.y, 3.5f);
-
 	}
 
 	void OnCollisionEnter(Collision c) {
@@ -150,11 +153,18 @@ public class mallet_controller : MonoBehaviour {
 			*/
 		}
 	}
-	/*
-	void newPoint(bool whoseServe) {
-		if (controller.isPlayerServe) {
-			
-		}
+
+	public void pause() {
+		isPaused = true;
 	}
-	*/
+
+	public void resetPos() {
+		malletRb.velocity.Set (0f, 0f, 0f);
+		transform.position = initPos;
+	}
+
+	public void unpause() {
+		print("next point");
+		isPaused = false;
+	}
 }

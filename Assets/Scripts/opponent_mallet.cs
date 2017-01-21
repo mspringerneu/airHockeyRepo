@@ -15,6 +15,7 @@ public class opponent_mallet : MonoBehaviour {
 	public float inputSpeed = 2.0f;
 	public float playerSpeed;
 	public float puckSpeed;
+	private bool isPaused;
 
 	// mallet diameter 4 1/2"
 
@@ -40,8 +41,9 @@ public class opponent_mallet : MonoBehaviour {
 
 		// ai = GameObject.Find ("AI").GetComponent<AI> ();
 		coll = GameObject.Find("Rink/Boards").GetComponentInChildren<Rigidbody> ();
-		puckRb = GameObject.FindGameObjectWithTag ("puck").GetComponent<Rigidbody> ();
-		puck = GameObject.FindGameObjectWithTag ("puck");
+		//puckRb = GameObject.FindGameObjectWithTag ("puck").GetComponent<Rigidbody> ();
+		//puck = GameObject.FindGameObjectWithTag ("puck");
+		isPaused = true;
 	}
 
 	// Update is called once per frame
@@ -149,6 +151,19 @@ public class opponent_mallet : MonoBehaviour {
 			}
 			*/
 		}
+	}
+
+	public void pause() {
+		isPaused = true;
+	}
+
+	public void resetPos() {
+		malletRb.velocity.Set (0f, 0f, 0f);
+		transform.position = initPos;
+	}
+
+	public void unpause() {
+		isPaused = false;
 	}
 	/*
 	void newPoint(bool whoseServe) {
