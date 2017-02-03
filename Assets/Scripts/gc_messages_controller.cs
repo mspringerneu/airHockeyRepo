@@ -13,8 +13,8 @@ public class gc_messages_controller : MonoBehaviour
 	private Text p2_p1score;
 	private Text p2_p2score;
 	private Text p2_gcMessage;
-	private int p1score;
-	private int p2score;
+	private static int p1score = 0;
+	private static int p2score = 0;
 	private int scoreLimit;
 	// Use this for initialization
 	void Start ()
@@ -39,8 +39,6 @@ public class gc_messages_controller : MonoBehaviour
 				p2_gcMessage = p2_text;
 			}
 		}
-		p1score = 0;
-		p2score = 0;
 		scoreLimit = 5;
 	}
 

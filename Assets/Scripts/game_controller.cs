@@ -3,12 +3,12 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class game_controller : MonoBehaviour {
-	private bool is_p1_serve;
-	private bool is_p2_serve;
-	private bool p1_puck_active;
-	private bool p2_puck_active;
-	private static int playerScore;
-	private static int opponentScore;
+	private bool is_p1_serve = true;
+	private bool is_p2_serve = false;
+	private bool p1_puck_active = true;
+	private bool p2_puck_active = false;
+	private static int playerScore = 0;
+	private static int opponentScore = 0;
 	private int maxScore;
 	private GameObject player1Canvas;
 	private GameObject player2Canvas;
@@ -30,7 +30,6 @@ public class game_controller : MonoBehaviour {
 		p1_puckController = GameObject.FindGameObjectWithTag("p1_puck").GetComponentInChildren<puck_controller>();
 		//p2_puckController = GameObject.FindGameObjectWithTag("p2_puck").GetComponentInChildren<puck_controller>();
 		maxScore = 5;
-		reset ();
 		startGame ();
 	}
 	

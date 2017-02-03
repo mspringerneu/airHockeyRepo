@@ -11,6 +11,9 @@ public class mallet_controller : MonoBehaviour {
 	private Rigidbody coll;
 	private Rigidbody puckRb;
 	private GameObject puck;
+	private ParticleSystem partSys;
+	private Vector3 forward = new Vector3 (0f, 0f, 1f);
+	private Vector3 up = new Vector3 (0f, 1f, 0f);
 	public float inputPadding = 0.0f;
 	public float inputSpeed = 2.0f;
 	public float playerSpeed;
@@ -38,6 +41,7 @@ public class mallet_controller : MonoBehaviour {
 		initPos = mallet.GetComponent<Transform>().position;
 		tableLayer = 1 << LayerMask.NameToLayer ("surface");
 		controller = GameObject.FindGameObjectWithTag ("GameController");
+		partSys = mallet.GetComponent<ParticleSystem> ();
 
 		// ai = GameObject.Find ("AI").GetComponent<AI> ();
 		coll = GameObject.Find("Rink/Boards").GetComponentInChildren<Rigidbody> ();
@@ -124,6 +128,12 @@ public class mallet_controller : MonoBehaviour {
 		print("Collision!");
 		if (c.gameObject.tag == "puck") {
 			print("puck collision!");
+			print ("puck: " + c.transform.position.ToString ());
+			print ("player mallet: " + transform.position.ToString ());
+			print ("player mallet forward: " + transform.forward.ToString ());
+			Vector3 collPoint = new Vector3 (c.transform.position.x, 0.5f, c.transform.position.z);
+			transform.LookAt (collPoint, up);
+			partSys.Play ();
 			// ai.counter = 0f; //see AI.cs for explanation
 
 
@@ -151,6 +161,12 @@ public class mallet_controller : MonoBehaviour {
 				}
 			}
 			*/
+		}
+	}
+
+	void OnCollisionExit(Collision c) {
+		if (c.gameObject.tag == "puck") {
+			transform.LookAt (forward, up);
 		}
 	}
 
